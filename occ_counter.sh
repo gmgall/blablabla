@@ -9,8 +9,16 @@
 # Verifica se o arquivo pode ser lido
 [ ! -e "$1" ] && { echo "Não consegui ler $1"; exit 1; }
 
-sed -n '1,$p' "$1" |
+# Gera lista com a contagem das ocorrências
+LISTA="$(sed -n '1,$p' "$1" |
 	cut -f4 -d\" |
 	sort |
 	uniq -c |
-	sort -n -r
+	sort -n -r)"
+
+# Mostra a lista
+echo "$LISTA"
+
+# Mostra o total de espécies
+echo
+echo Total de espécies $(wc -l <<<"$LISTA")
